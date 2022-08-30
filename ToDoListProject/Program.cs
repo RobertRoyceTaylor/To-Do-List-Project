@@ -40,7 +40,6 @@ namespace ToDoListProject
                 {
                     //Adds the user input to the list
                     toDoList.Add($"{toDoList.Count}[] - {input}");
-                    //Clears the console
                     Console.Clear();
                     //Displays the list then starts the loop over just displaying the list
                     ForEachView(toDoList);
