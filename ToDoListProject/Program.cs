@@ -4,6 +4,7 @@ using System.IO;
 
 namespace ToDoListProject
 {
+    
     internal class Program
     {
         //To Do Tomorrow::
@@ -11,17 +12,20 @@ namespace ToDoListProject
         //Use Regex to grab the line number
         //Figure out marking as complete
         //Figure out deleting
+
         static void Main(string[] args)
         {
             //The path the file is in (change for release)
             string path = @"list.txt";
             //Creates the list that stores the tasks
             List<string> toDoList = new List<string>();
+            //Creates the list to store the completed tasks
+            List<string> toDoListComplete = new List<string>();
 
             //Stores previous lines within todo list upon opening
             string[] readFile = File.ReadAllLines(path);
             
-            //Add Range in to replace a foreach loop (Khalil taught me)
+            //AddRange in to replace a foreach loop (Khalil taught me)
             toDoList.AddRange(readFile);
             
             ForEachView(toDoList);
@@ -39,7 +43,7 @@ namespace ToDoListProject
                 else
                 {
                     //Adds the user input to the list
-                    toDoList.Add($"{toDoList.Count}[] - {input}");
+                    toDoList.Add(input);
                     Console.Clear();
                     //Displays the list then starts the loop over just displaying the list
                     ForEachView(toDoList);
@@ -52,12 +56,13 @@ namespace ToDoListProject
         }
 
         //Takes the user input for the tasks on the list
-        static public string UserInput()
+        private static string UserInput()
         {
             Console.WriteLine("===================");
             Console.WriteLine("----Add to List----");
             Console.WriteLine("===================");
             Console.WriteLine("Type #Done to Finsh");
+            Console.WriteLine("Type #Check to Check Off Item");
             Console.WriteLine("===================");
             //More Instructions needed
             string input = Console.ReadLine();
@@ -66,12 +71,14 @@ namespace ToDoListProject
         }
 
         //Displays the list itself using a foreach loop
-        static public void ForEachView(List<string> lines)
+        private static void ForEachView(List<string> lines)
         {
             foreach(string line in lines)
             {
-                Console.WriteLine(line);
+                //prints the index a check box and the line
+                Console.WriteLine($"{lines.IndexOf(line) + 1}[] - {line}");
             }
         }
+
     }
 }
