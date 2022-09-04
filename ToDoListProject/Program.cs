@@ -7,8 +7,7 @@ namespace ToDoListProject
     
     internal class Program
     {
-        //To Do Tomorrow::
-        //Figure out how to either impliment classes to count the entries
+        //To Do:
         //Use Regex to grab the line number
         //Figure out marking as complete
         //Figure out deleting
@@ -36,9 +35,16 @@ namespace ToDoListProject
                 //Takes the user input method and stores it in a string
                 string input = UserInput();
                 //If the conditions are met, will exit out of the program
-                if(input == "#Done" || input == "#D")
+                if (input == "#Done" || input == "#D")
                 {
                     break;
+                }
+                else if (input == "#Check" || input == "#C")
+                {
+                    Console.Clear();
+                    //Figure out:
+                        //Why if you make the same entry the index doesn't change
+                        //How to mark an item as complete
                 }
                 else
                 {
@@ -78,6 +84,11 @@ namespace ToDoListProject
                 //prints the index a check box and the line
                 Console.WriteLine($"{lines.IndexOf(line) + 1}[] - {line}");
             }
+        }
+
+        private static void MarkComplete(List<string> lines,int userInput)
+        {
+            lines.RemoveAt(userInput-1);
         }
 
     }
