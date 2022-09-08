@@ -35,7 +35,7 @@ namespace ToDoListProject
                 //Takes the user input method and stores it in a string
                 string input = UserInput();
                 //If the conditions are met, will exit out of the program
-                if (input == "#Done" || input == "#D")
+                if (input == "#Save" || input == "#S")
                 {
                     break;
                 }
@@ -64,12 +64,12 @@ namespace ToDoListProject
         //Takes the user input for the tasks on the list
         private static string UserInput()
         {
-            Console.WriteLine("===================");
-            Console.WriteLine("----Add to List----");
-            Console.WriteLine("===================");
-            Console.WriteLine("Type #Done to Finsh");
-            Console.WriteLine("Type #Check to Check Off Item");
-            Console.WriteLine("===================");
+            Console.WriteLine("=====================");
+            Console.WriteLine("-----Add to List-----");
+            Console.WriteLine("=====================");
+            Console.WriteLine("  Type #Save to Save");
+            //Console.WriteLine("Type #Check to Check Off Item");
+            Console.WriteLine("=====================");
             //More Instructions needed
             string input = Console.ReadLine();
             return input;
