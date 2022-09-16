@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ToDoListProject
 {
-    
+
     internal class Program
     {
         //To Do:
         //Figure out deleting
-        //Create files for saving if files are not present
 
 
         static void Main(string[] args)
         {
+            VerifyFiles();
             
-            
-
             #region
             //The paths the files are in
             string path = @"list.txt";
@@ -31,7 +27,7 @@ namespace ToDoListProject
             //Stores previous lines within to-do list upon opening
             string[] readFile = File.ReadAllLines(path);
             string[] readFileComplete = File.ReadAllLines(pathComplete);
-            
+
             //AddRange in to replace a foreach loop (Khalil taught me)
             toDoList.AddRange(readFile);
             toDoListComplete.AddRange(readFileComplete);
@@ -50,7 +46,7 @@ namespace ToDoListProject
 
                 //Takes the user input method and stores it in a string
                 string input = UserInput();
-                
+
                 //If the conditions are met, will exit out of the program
                 if (input.ToLower() == "#save" || input == "#s")
                 {
@@ -58,7 +54,7 @@ namespace ToDoListProject
                 }
                 else if (input.ToLower() == "#check" || input == "#c")
                 {
-                    MarkTaskComplete(toDoList,toDoListComplete); 
+                    MarkTaskComplete(toDoList, toDoListComplete);
                 }
                 else
                 {
@@ -81,6 +77,20 @@ namespace ToDoListProject
         }
 
 
+        private static void VerifyFiles()
+        {
+            //if the files dont exist makes new files
+            if (!File.Exists(@"list.txt"))
+            {
+                using (File.Create("list.txt")) { }
+            }
+
+            if (!File.Exists(@"list-complete.txt"))
+            {
+                using (File.Create("list-complete.txt")) { }
+            }
+        }
+
 
         //Takes the user input for the tasks on the list
         private static string UserInput()
@@ -101,7 +111,7 @@ namespace ToDoListProject
         //Displays the list itself using a foreach loop
         private static void ForEachView(List<string> lines)
         {
-            foreach(string line in lines)
+            foreach (string line in lines)
             {
                 //prints the index a check box and the line
                 Console.WriteLine($"{lines.IndexOf(line) + 1}[] - {line}");
@@ -132,7 +142,7 @@ namespace ToDoListProject
                 Console.Write("> ");
 
                 string userInputCheck = Console.ReadLine();
-                if(userInputCheck.ToLower() == "#exit" || userInputCheck == "#e")
+                if (userInputCheck.ToLower() == "#exit" || userInputCheck == "#e")
                 {
                     break;
                 }
@@ -140,7 +150,7 @@ namespace ToDoListProject
                 int lengthOfToDoList = toDoList.Count;
                 if (userInputCheckParse && userInputCheckInt <= lengthOfToDoList)
                 {
-                    toDoListComplete.Add(toDoList[userInputCheckInt-1]);
+                    toDoListComplete.Add(toDoList[userInputCheckInt - 1]);
                     toDoList.RemoveAt(userInputCheckInt - 1);
 
                 }
