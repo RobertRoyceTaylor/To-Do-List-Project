@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ToDoListProject
 {
@@ -9,9 +11,14 @@ namespace ToDoListProject
     {
         //To Do:
         //Figure out deleting
+        //Create files for saving if files are not present
+
 
         static void Main(string[] args)
         {
+            
+            
+
             #region
             //The paths the files are in
             string path = @"list.txt";
@@ -45,11 +52,11 @@ namespace ToDoListProject
                 string input = UserInput();
                 
                 //If the conditions are met, will exit out of the program
-                if (input == "#Save" || input == "#S")
+                if (input.ToLower() == "#save" || input == "#s")
                 {
                     break;
                 }
-                else if (input == "#Check" || input == "#C")
+                else if (input.ToLower() == "#check" || input == "#c")
                 {
                     MarkTaskComplete(toDoList,toDoListComplete); 
                 }
@@ -72,6 +79,8 @@ namespace ToDoListProject
             File.WriteAllLines(path, toDoList);
             File.WriteAllLines(pathComplete, toDoListComplete);
         }
+
+
 
         //Takes the user input for the tasks on the list
         private static string UserInput()
@@ -123,7 +132,7 @@ namespace ToDoListProject
                 Console.Write("> ");
 
                 string userInputCheck = Console.ReadLine();
-                if(userInputCheck == "#Exit" || userInputCheck == "#E")
+                if(userInputCheck.ToLower() == "#exit" || userInputCheck == "#e")
                 {
                     break;
                 }
