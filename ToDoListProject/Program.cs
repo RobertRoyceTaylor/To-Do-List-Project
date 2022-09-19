@@ -8,13 +8,13 @@ namespace ToDoListProject
     internal class Program
     {
         //To Do:
-        //Figure out deleting
 
 
         static void Main(string[] args)
         {
             VerifyFiles();
             
+
             #region
             //The paths the files are in
             string path = @"list.txt";
@@ -34,41 +34,52 @@ namespace ToDoListProject
             #endregion
 
 
-            //While loop to write to the file
+            
             while (true)
             {
                 //Displays the Graphics
                 Console.Clear();
-                Console.WriteLine("----- ToDo List -----");
-                ForEachView(toDoList);
-                Console.WriteLine("----- Completed -----");
-                ForEachViewComplete(toDoListComplete);
 
                 //Takes the user input method and stores it in a string
-                string input = UserInput();
+                string input = UserInput(toDoList,toDoListComplete);
 
                 //If the conditions are met, will exit out of the program
                 if (input.ToLower() == "#save" || input == "#s")
                 {
                     break;
                 }
-                else if (input.ToLower() == "#check" || input == "#c")
+                else if (input.ToLower() == "#mark" || input == "#m")
                 {
                     MarkTaskComplete(toDoList, toDoListComplete);
                 }
+                else if(input.ToLower() == "#delete" || input == "#d")
+                {
+                    DeleteTasks(toDoList);
+                }
                 else
                 {
-                    //Adds the user input to the list
-                    toDoList.Add(input);
+                    if (toDoList.Contains(input))
+                    {
+                        //Doesn't add to the list if it already exists
+                    }
+                    else
+                    {
+                        toDoList.Add(input);
+                    }
+
                 }
+                
             }
             //Exiting the Program
             Console.Clear();
-            Console.WriteLine("----- ToDo List -----");
+            Console.WriteLine("=======================");
+            Console.WriteLine("----- Saving List -----");
+            Console.WriteLine("=======================");
+            Console.WriteLine("------ ToDo List ------");
             ForEachView(toDoList);
-            Console.WriteLine("----- Completed -----");
+            Console.WriteLine("------ Completed ------");
             ForEachViewComplete(toDoListComplete);
-            Console.WriteLine("======================");
+            Console.WriteLine("=======================");
             Console.WriteLine("Files saved. \nPress any key to quit...");
             Console.Read();
             //Saves the lists to the files
@@ -93,14 +104,22 @@ namespace ToDoListProject
 
 
         //Takes the user input for the tasks on the list
-        private static string UserInput()
+        private static string UserInput(List<string> toDoList, List<string> toDoListComplete)
         {
             //Displays instructions
             Console.WriteLine("=======================");
             Console.WriteLine("----- Add to List -----");
             Console.WriteLine("=======================");
-            Console.WriteLine("- Type #Save to Save -");
-            Console.WriteLine("Type #Check to Check Off Item");
+            Console.WriteLine("------ ToDo List ------");
+            ForEachView(toDoList);
+            Console.WriteLine();
+            Console.WriteLine("------ Completed ------");
+            ForEachViewComplete(toDoListComplete);
+            Console.WriteLine();
+            Console.WriteLine("=======================");
+            Console.WriteLine("Type #Mark to Mark Off");
+            Console.WriteLine("Type #Delete to Delete");
+            Console.WriteLine("Type #Save to Save");
             Console.WriteLine("=======================");
             Console.Write("> ");
             string userInput = Console.ReadLine();
@@ -133,7 +152,11 @@ namespace ToDoListProject
             {
                 //Displays Graphics
                 Console.Clear();
+                Console.WriteLine("======================");
+                Console.WriteLine("-- Mark As Complete --");
+                Console.WriteLine("======================");
                 ForEachView(toDoList);
+                Console.WriteLine();
                 Console.WriteLine("======================");
                 Console.WriteLine("-- Select line item --");
                 Console.WriteLine("======================");
@@ -155,6 +178,39 @@ namespace ToDoListProject
 
                 }
             }
+        }
+
+        private static void DeleteTasks(List<string> toDoList)
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("======================");
+                Console.WriteLine("------- Delete -------");
+                Console.WriteLine("======================");
+                ForEachView(toDoList);
+                Console.WriteLine();
+                Console.WriteLine("======================");
+                Console.WriteLine("-- Select line item --");
+                Console.WriteLine("======================");
+                Console.WriteLine("- Type #Exit to Exit -");
+                Console.WriteLine("======================");
+                Console.Write("> ");
+
+                string userInputCheck = Console.ReadLine();
+                if (userInputCheck.ToLower() == "#exit" || userInputCheck == "#e")
+                {
+                    break;
+                }
+                bool userInputCheckParse = Int32.TryParse(userInputCheck, out int userInputCheckInt);
+                int lengthOfToDoList = toDoList.Count;
+                if (userInputCheckParse && userInputCheckInt <= lengthOfToDoList)
+                {
+                    toDoList.RemoveAt(userInputCheckInt - 1);
+                }
+            }
+
+
         }
 
     }
